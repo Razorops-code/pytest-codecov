@@ -1,0 +1,16 @@
+
+tasks:
+  build-deps:
+    #runner: razorci/openjdk
+    steps:
+    - checkout
+    - commands:
+    - run: pip install -r requirements.txt
+    - run: pip install pytest
+    - run: pip install pytest-cov
+    - run: pytest --cov app
+    - codecov/upload 
+    - run: |
+           curl -Os https://uploader.codecov.io/latest/linux/codecov
+           chmod +x codecov
+           ./codecov -t ${CODECOV_TOKEN}
